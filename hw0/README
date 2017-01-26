@@ -1,0 +1,8 @@
+HOW TO COMPILE
+
+  make clean
+  make
+
+HOW TO RUN
+
+  ./hw0 

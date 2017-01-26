@@ -5,8 +5,8 @@
 #include <ctime>
 
 void initialize(unsigned int, float*);
-void smooth();
-void count();
+void smooth(unsigned int, float*, float*, float, float, float);
+void count(unsigned int, float*, float, unsigned int*);
 
 int main() {
 
@@ -25,9 +25,16 @@ int main() {
 	float* x = (float*) malloc(n * n * sizeof(float));
 	float* y = (float*) malloc(n * n * sizeof(float));
 
+	// Initialize the arrays
 	initialize(n, x);
 	initialize(n, y);
-	
+
+	// Smoothing the array x
+	smooth(n, x, y, a, b, c);
+
+	// Count the elements under the threshold
+
+
 	return 0;
 }
 
@@ -39,4 +46,21 @@ void initialize(unsigned int nDim, float* theArray) {
 	}
 
 	return;
+}
+
+void smooth(unsigned int nDim, float* x, float* y, float aCoeff, float bCoeff, float cCoeff) {
+	for (unsigned int i = 1; i < nDim - 1; i++) {
+		for (unsigned int j = 1; j < nDim -1; j++) {
+			*(y + i*nDim + j) =
+			aCoeff * (*(x + (i-1)*nDim + (j-1)) + *(x + (i-1)*nDim + (j+1)) + *(x + (i+1)*nDim + (j-1)) + *(x + (i+1)*nDim + (j+1))) +
+			bCoeff * (*(x + (i-1)*nDim + (j+0)) + *(x + (i+1)*nDim + (j+0)) + *(x + (i+0)*nDim + (j-1)) + *(x + (i+0)*nDim + (j+1))) +
+			cCoeff * (*(x + (i+0)*nDim + (j+0)));
+		}
+	}
+
+	return;
+}
+
+void count(unsigned int nDim, float *theArray, float theThreshold, unsigned int* theCount) {
+	
 }

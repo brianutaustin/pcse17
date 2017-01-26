@@ -10,6 +10,16 @@ void count(unsigned int, float*, float, unsigned int*);
 
 int main() {
 
+	//======================
+	// Timing the code
+	clock_t nt1;
+	clock_t nt2;
+	clock_t nt3;
+	clock_t nt4;
+	clock_t nt5;
+	clock_t nt6;
+	//======================
+
 	// Smoothing coeffs
 	const float a = 0.05;
 	const float b = 0.1;
@@ -25,6 +35,10 @@ int main() {
 	float* x = (float*) malloc(n * n * sizeof(float));
 	float* y = (float*) malloc(n * n * sizeof(float));
 
+	// Number of elements under threshold
+	unsigned int belowThresholdCountX;
+	unsigned int belowThresholdCountY;
+
 	// Initialize the arrays
 	initialize(n, x);
 	initialize(n, y);
@@ -33,7 +47,8 @@ int main() {
 	smooth(n, x, y, a, b, c);
 
 	// Count the elements under the threshold
-
+	count(n, x, t, &belowThresholdCountX);
+	count(n, y, t, &belowThresholdCountY);
 
 	return 0;
 }
@@ -62,5 +77,16 @@ void smooth(unsigned int nDim, float* x, float* y, float aCoeff, float bCoeff, f
 }
 
 void count(unsigned int nDim, float *theArray, float theThreshold, unsigned int* theCount) {
-	
+	int count = 0;
+	for (unsigned int i = 0; i < nDim; i++) {
+		for (unsigned int j = 0; j < nDim; j++) {
+			if (*(theArray + i * nDim + j) < theThreshold) {
+				count++;
+			}
+		}
+	}
+
+	*(theCount) = count;
+
+	return;
 }

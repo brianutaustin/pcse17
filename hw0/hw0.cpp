@@ -1,6 +1,5 @@
 #include <iostream>
-#include <fstream>
-#include <cmath>
+#include <iomanip>
 #include <cstdlib>
 #include <ctime>
 
@@ -12,12 +11,11 @@ int main() {
 
 	//======================
 	// Timing the code
-	clock_t nt1;
-	clock_t nt2;
-	clock_t nt3;
-	clock_t nt4;
-	clock_t nt5;
-	clock_t nt6;
+	time_t Start;
+	time_t subInitializeEnd;
+	time_t subSmoothEnd;
+	time_t subCountXEnd;
+	time_t subCountYEnd;
 	//======================
 
 	// Smoothing coeffs
@@ -39,16 +37,49 @@ int main() {
 	unsigned int belowThresholdCountX;
 	unsigned int belowThresholdCountY;
 
-	// Initialize the arrays
+/*
+	// Initialize the array x
+	Start = clock();
 	initialize(n, x);
-	initialize(n, y);
+	subInitializeEnd = clock();
 
 	// Smoothing the array x
 	smooth(n, x, y, a, b, c);
+	subSmoothEnd = clock();
 
 	// Count the elements under the threshold
 	count(n, x, t, &belowThresholdCountX);
+	subCountXEnd = clock();
 	count(n, y, t, &belowThresholdCountY);
+	subCountYEnd = clock();
+*/
+
+
+	//======================
+	// Display Benchmark
+	std::cout << std::setw(40) << std::left << "Summary" << std::endl;
+	std::cout << std::setw(40) << std::left << "-------" << std::endl;
+	std::cout << std::setw(40) << std::left << "Number of elements in a row/column" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Number of inner elements in a row/column" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Total number of elements" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Total number of inner elements" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Memory (GB) used per array" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Threshold" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Smoothing constants (a, b, c)" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Number of elements below threshold (X)" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Fraction of elements below threshold" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Number of elements below threshold (Y)" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::setw(40) << std::left << "Fraction of elements below threshold" << std::setw(3) << std::right << " ::" << std::endl;
+	std::cout << std::endl;
+	std::cout << std::setw(15) << std::left << "Action" << std::setw(2) << std::right << "::" << std::endl;
+	std::cout << std::setw(15) << std::left << "------" << std::endl;
+	std::cout << std::setw(15) << std::left << "CPU: Alloc-X" << std::setw(2) << std::right << "::" << std::endl;
+	std::cout << std::setw(15) << std::left << "CPU: Alloc-X" << std::setw(2) << std::right << "::" << std::endl;
+	std::cout << std::setw(15) << std::left << "CPU: Init-X" << std::setw(2) << std::right << "::" << std::endl;
+	std::cout << std::setw(15) << std::left << "CPU: Smooth" << std::setw(2) << std::right << "::" << std::endl;
+	std::cout << std::setw(15) << std::left << "CPU: Count-X" << std::setw(2) << std::right << "::" << std::endl;
+	std::cout << std::setw(15) << std::left << "CPU: Count-Y" << std::setw(2) << std::right << "::" << std::endl;
+	//======================
 
 	return 0;
 }
